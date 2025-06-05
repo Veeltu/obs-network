@@ -11,7 +11,7 @@ resource "kubernetes_manifest" "otel_gateway" {
     kind       = "Gateway"
     metadata = {
       name      = "otel"
-      namespace = kubernetes_namespace.otel_collector.metadata.0.name
+      namespace = kubernetes_namespace.network.metadata.0.name
     }
 
     spec = {
@@ -67,10 +67,10 @@ resource "kubernetes_manifest" "otel_gateway" {
                 }
               ]
             }
-          },
-          lookup(route, "tls", null) == null ? {} : {
-            tls = route.tls
-          }
+            },
+            lookup(route, "tls", null) == null ? {} : {
+              tls = route.tls
+            }
           )
       ])
     }
@@ -81,10 +81,10 @@ resource "kubernetes_manifest" "syslogtcp_route" {
   for_each = local.tcpRoutes
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1alpha2"
-    kind       = lookup(each.value, "ssl", {mode="Terminate"})["mode"] == "Passthrough" ? "TLSRoute" : "TCPRoute"
+    kind       = lookup(each.value, "ssl", { mode = "Terminate" })["mode"] == "Passthrough" ? "TLSRoute" : "TCPRoute"
     metadata = {
       name      = each.key
-      namespace = kubernetes_namespace.otel_collector.metadata.0.name
+      namespace = kubernetes_namespace.network.metadata.0.name
     }
     spec = {
       parentRefs = [

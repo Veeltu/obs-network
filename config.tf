@@ -3,10 +3,10 @@
 # }
 
 locals {
-  otel_config = merge(
-    yamldecode(file("otel-config.yaml")), 
-    #[ for k in try(fileset("otel", "*.yaml"), []) : yamldecode(file("otel/${k}"))]...
-  )
+  # otel_config = merge(
+  #   yamldecode(file("otel-config.yaml")), 
+  #   #[ for k in try(fileset("otel", "*.yaml"), []) : yamldecode(file("otel/${k}"))]...
+  # )
 
   tcpRoutes = {
     syslogtcp = {
