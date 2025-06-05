@@ -1,5 +1,6 @@
 variable "project" {
-  type = string
+  type    = string
+  default = "my-default-project"
 }
 
 variable "cluster" {
@@ -7,6 +8,10 @@ variable "cluster" {
     name     = string
     location = string
   })
+  default = {
+    name     = "my-default-cluster"
+    location = "europe-west1"
+  }
 }
 
 variable "docker_repositories" {
@@ -16,4 +21,10 @@ variable "docker_repositories" {
     docker_hub = string
     ghcr_io    = string
   })
+  default = {
+    quay_io    = "quay.io/myorg"
+    edp_docker = "edp-docker.mycompany.com"
+    docker_hub = "docker.io/myuser"
+    ghcr_io    = "ghcr.io/myorg"
+  }
 }
