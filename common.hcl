@@ -8,7 +8,7 @@ locals {
     quay_io         = "europe-west3-docker.pkg.dev/nz-mgmt-shared-artifacts-8c85/quay-io"
     edp_docker      = "europe-west3-docker.pkg.dev/nz-mgmt-shared-artifacts-8c85/edp-docker"
     docker_hub      = "europe-west3-docker.pkg.dev/nz-mgmt-shared-artifacts-8c85/docker-hub"
-    ghcr_io      = "europe-west3-docker.pkg.dev/nz-mgmt-shared-artifacts-8c85/ghcr-io"
+    ghcr_io         = "europe-west3-docker.pkg.dev/nz-mgmt-shared-artifacts-8c85/ghcr-io"
   }
   project = "nzd-smanke-res-ehay"
   cluster = {
