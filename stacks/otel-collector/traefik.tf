@@ -31,6 +31,8 @@ resource "helm_release" "traefik" {
   chart      = "traefik"
   version    = "32.1.1"
 
+  timeout = 900 # 15 min
+
   # If default_values == "" then apply default values from the chart if its anything else
   # then apply values file using the values_file input variable
   values = [
