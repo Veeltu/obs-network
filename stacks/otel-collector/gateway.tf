@@ -97,7 +97,7 @@ resource "kubernetes_manifest" "syslogtcp_route" {
         {
           backendRefs = [
             {
-              name = kubernetes_service_v1.test-mock.metadata.0.name
+              name = kubernetes_service_v1.test_mock.metadata.0.name
               # name = kubernetes_service_v1.collector.metadata.0.name
               port = each.value.port
             }
