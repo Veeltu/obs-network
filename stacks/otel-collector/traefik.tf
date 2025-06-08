@@ -25,7 +25,7 @@ resource "kubernetes_namespace" "traefik" {
 
 # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
 resource "helm_release" "traefik" {
-  namespace  = kubernetes_namespace.network.metadata[0].name
+  namespace  = kubernetes_namespace.traefik.metadata[0].name
   name       = "traefik"
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
@@ -118,7 +118,7 @@ resource "kubernetes_manifest" "certs" {
     kind       = "Certificate"
     metadata = {
       name      = replace(each.key, ".", "-")
-      namespace = kubernetes_namespace.network.metadata.0.name
+      namespace = kubernetes_namespace.traefik.metadata.0.name
     }
     spec = {
       dnsNames = [
