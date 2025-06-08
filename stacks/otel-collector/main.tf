@@ -28,7 +28,7 @@ resource "kubernetes_config_map_v1" "collector" {
   }
 
   data = {
-    "config.yaml" = file("otel_config.yaml")
+    "config.yaml" = file("otel-config.yaml")
     # "config.yaml" = yamlencode(local.otel_config)
 
   }
