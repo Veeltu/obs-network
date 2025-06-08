@@ -7,7 +7,8 @@ locals {
   working_dir_parts = split("/", local.working_dir_fullpath)
   secret_suffix = "${element(local.working_dir_parts, length(local.working_dir_parts)-1)}-${element(local.working_dir_parts, length(local.working_dir_parts)-2)}"
   config_path = "~/.kube/config"
-  config_context = "pndrs-observability"
+  config_context = "microk8s"
+  # config_context = "pndrs-observability"
   #config_context = "gke_smanke-dev-test-5mkmp_europe-west3_autopilot-cluster-1"
 }
 
