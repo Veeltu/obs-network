@@ -31,7 +31,8 @@ resource "kubernetes_deployment_v1" "test_mock" {
 
 resource "kubernetes_service_v1" "test_mock" {
   metadata {
-    name      = "test-mock"
+    name = "test-mock"
+
     namespace = kubernetes_namespace.network.metadata.0.name
   }
   spec {
