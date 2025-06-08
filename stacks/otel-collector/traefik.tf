@@ -37,9 +37,9 @@ resource "helm_release" "traefik" {
   # then apply values file using the values_file input variable
   values = [
     yamlencode({
-      image = {
-        registry = var.docker_repositories.docker_hub
-      }
+      # image = {
+      #   registry = var.docker_repositories.docker_hub
+      # }
       deployment = {
         replicas = 1
         # replicas = 3
