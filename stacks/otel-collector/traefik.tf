@@ -40,6 +40,11 @@ resource "helm_release" "traefik" {
       # image = {
       #   registry = var.docker_repositories.docker_hub
       # }
+      image = {
+        registry   = "docker.io" # official registry
+        repository = "traefik"
+        tag        = "v3.1.6"
+      }
       deployment = {
         replicas = 1
         # replicas = 3
