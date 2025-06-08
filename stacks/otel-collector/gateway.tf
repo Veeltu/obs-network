@@ -94,14 +94,14 @@ resource "kubernetes_manifest" "syslogtcp_route" {
         }
       ]
       rules = [
-        # {
-        #   backendRefs = [
-        #     {
-        #       name = kubernetes_service_v1.collector.metadata.0.name
-        #       port = each.value.port
-        #     }
-        #   ]
-        # }
+        {
+          backendRefs = [
+            {
+              name = kubernetes_service_v1.collector.metadata.0.name
+              port = each.value.port
+            }
+          ]
+        }
       ]
     }
   }
