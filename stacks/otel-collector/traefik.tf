@@ -39,7 +39,8 @@ resource "helm_release" "traefik" {
         registry = var.docker_repositories.docker_hub
       }
       deployment = {
-        replicas = 3
+        replicas = 1
+        # replicas = 3
       }
       ingressClass = {
         enabled = true
