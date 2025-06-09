@@ -264,8 +264,8 @@ resource "kubernetes_deployment_v1" "collector" {
               dynamic "secret" {
                 for_each = local.certs
                 content {
-                  name = kubernetes_secret_v1.certs[secret.key].metadata[0].name
                   # name = replace(secret.value, ".", "-")
+                  optional = true # Make it optional to avoid failures if cert isn't ready yet
                   items {
                     key  = "tls.crt"
                     path = "${replace(secret.value, ".", "-")}.crt"
@@ -283,5 +283,5 @@ resource "kubernetes_deployment_v1" "collector" {
     }
   }
 
-  # depends_on = [kubernetes_manifest.certs]
+  depends_on = [kubernetes_manifest.certs]
 }
