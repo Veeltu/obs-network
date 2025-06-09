@@ -55,8 +55,7 @@ resource "helm_release" "traefik" {
       logs = {
         general = {
           format = "json"
-          level  = "INFO"
-          # level  = "DEBUG"
+          level  = "DEBUG"
         }
         access = {
           enabled = true
