@@ -264,7 +264,7 @@ resource "kubernetes_deployment_v1" "collector" {
               dynamic "secret" {
                 for_each = local.certs
                 content {
-                  # name = replace(secret.value, ".", "-")
+                  name     = replace(secret.value, ".", "-")
                   optional = true # Make it optional to avoid failures if cert isn't ready yet
                   items {
                     key  = "tls.crt"
