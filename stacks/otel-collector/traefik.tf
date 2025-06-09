@@ -89,7 +89,7 @@ resource "helm_release" "traefik" {
           experimentalChannel = true
         }
         kubernetesIngress = {
-          enabled = true
+          enabled = false
         }
         kubernetesCRD = {
           enabled = true
