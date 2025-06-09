@@ -2,7 +2,8 @@ apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
   name: sidecar
-  namespace: otel-collector
+  namespace: network
+  # namespace: otel-collector
 spec:
   mode: sidecar
   config:

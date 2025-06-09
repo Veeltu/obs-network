@@ -7,25 +7,26 @@ locals {
   ])
 }
 
-resource "kubernetes_namespace" "traefik" {
-  metadata {
-    name = "traefik"
-    labels = {
-      shared-gateway-access = "true"
-    }
-  }
+# resource "kubernetes_namespace" "traefik" {
+#   metadata {
+#     name = "traefik"
+#     labels = {
+#       shared-gateway-access = "true"
+#     }
+#   }
 
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations["cattle.io/status"],
-      metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
-    ]
-  }
-}
+#   lifecycle {
+#     ignore_changes = [
+#       metadata[0].annotations["cattle.io/status"],
+#       metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
+#     ]
+#   }
+# }
 
 # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
 resource "helm_release" "traefik" {
-  namespace  = kubernetes_namespace.traefik.metadata[0].name
+  namespace = kubernetes_namespace.network.metadata[0].name
+  # namespace  = kubernetes_namespace.traefik.metadata[0].name
   name       = "traefik"
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
@@ -138,7 +139,8 @@ resource "kubernetes_manifest" "certs" {
     kind       = "Certificate"
     metadata = {
       name      = replace(each.key, ".", "-")
-      namespace = kubernetes_namespace.traefik.metadata.0.name
+      namespace = kubernetes_namespace.network.metadata.0.name
+      # namespace = kubernetes_namespace.traefik.metadata.0.name
     }
     spec = {
       dnsNames = [

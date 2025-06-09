@@ -1,10 +1,9 @@
 
 receivers:
 
-  # Commenting out Kafka JMX receiver
-  # prometheus_simple/kafka_jmx:
-  #   collection_interval: 5s
-  #   endpoint: "http://otel-kafka-metrics.kafka-cluster.svc.cluster.local:9404/metrics"
+  prometheus_simple/kafka_jmx:
+    collection_interval: 5s
+    endpoint: "http://otel-kafka-metrics.kafka-cluster.svc.cluster.local:9404/metrics"
 
   kubeletstats:
     collection_interval: 10s
@@ -163,6 +162,6 @@ service:
       processors: [batch, resource/filelog]
       exporters: [otlphttp/loki]
     metrics:
-      receivers: [kubeletstats, hostmetrics]
+      receivers: [kubeletstats, hostmetrics, prometheus_simple/kafka_jmx]
       processors: [batch, k8sattributes]
       exporters: [otlphttp/prometheus]
