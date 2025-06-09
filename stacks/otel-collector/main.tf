@@ -33,7 +33,7 @@ resource "kubernetes_config_map_v1" "collector" {
 
 
   }
-  depends_on = [kubernetes_namespace.network]
+  # depends_on = [kubernetes_namespace.network]
 }
 
 
@@ -282,5 +282,5 @@ resource "kubernetes_deployment_v1" "collector" {
     }
   }
 
-  depends_on = [kubernetes_manifest.certs]
+  # depends_on = [kubernetes_manifest.certs]
 }
