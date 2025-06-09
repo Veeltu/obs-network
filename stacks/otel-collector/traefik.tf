@@ -62,34 +62,33 @@ resource "helm_release" "traefik" {
           format  = "json"
         }
       }
-      # gateway = {
-      #   enabled = false
-      #   listeners = {
-      #     web = {
-      #       port     = 8000
-      #       protocol = "HTTP"
-      #     }
-      #     websecure = {
-      #       port     = 8443
-      #       protocol = "HTTPS"
-      #       certificateRefs = [
-      #         for k in local.certs :
-      #         {
-      #           name = replace(k, ".", "-")
-      #         }
-      #       ]
-      #     }
-      #   }
-      # }
+      gateway = {
+        enabled = false
+        listeners = {
+          web = {
+            port     = 8000
+            protocol = "HTTP"
+          }
+          websecure = {
+            port     = 8443
+            protocol = "HTTPS"
+            certificateRefs = [
+              for k in local.certs :
+              {
+                name = replace(k, ".", "-")
+              }
+            ]
+          }
+        }
+      }
       providers = {
         # https://doc.traefik.io/traefik/providers/kubernetes-gateway/
         kubernetesGateway = {
-          enabled = false
-          # enabled             = true
-          # experimentalChannel = true
+          enabled             = true
+          experimentalChannel = true
         }
         kubernetesIngress = {
-          enabled = false
+          enabled = true
         }
         kubernetesCRD = {
           enabled = true
@@ -100,33 +99,33 @@ resource "helm_release" "traefik" {
           "external-dns.alpha.kubernetes.io/hostname" = "gw.observability.test.pndrs.de"
         }
       }
-      ports = {
-        web = {
-          port        = 8000
-          exposedPort = 8000
-          protocol    = "TCP"
-        }
-        websecure = {
-          port        = 8443
-          exposedPort = 8443
-          protocol    = "TCP"
-        }
-      }
-      # ports = merge({
-      #   # example:
-      #   # https://github.com/traefik/traefik-helm-chart/blob/045b7355d0890fc12ae92d2253295cf98e716e39/traefik/values.yaml#L614
-      #   for key, val in local.tcpRoutes : key => {
-      #     name        = key
-      #     port        = val.port
-      #     exposedPort = val.port
+      # ports = {
+      #   web = {
+      #     port        = 8000
+      #     exposedPort = 8000
       #     protocol    = "TCP"
-      #     expose = {
-      #       default = true
-      #     }
       #   }
-      #   }, {
+      #   websecure = {
+      #     port        = 8443
+      #     exposedPort = 8443
+      #     protocol    = "TCP"
+      #   }
+      # }
+      ports = merge({
+        # example:
+        # https://github.com/traefik/traefik-helm-chart/blob/045b7355d0890fc12ae92d2253295cf98e716e39/traefik/values.yaml#L614
+        for key, val in local.tcpRoutes : key => {
+          name        = key
+          port        = val.port
+          exposedPort = val.port
+          protocol    = "TCP"
+          expose = {
+            default = true
+          }
+        }
+        }, {
 
-      # })
+      })
     })
   ]
 }
