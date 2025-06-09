@@ -179,7 +179,31 @@ receivers:
               target_label: instance # set instance
               replacement: $1 # replace with address without port
 
-
+  snmp:
+    collection_interval: 60s
+    endpoints:
+      - endpoint: er-2613e3531e2348a087063887378c2a0f.default-doe.stable.pndrs.de
+        version: v2c
+        community: vyos
+      - endpoint: er-2516c83242e043ea93c56fc04589075f.doe.stable.pndrs.de
+        version: v2c
+        community: vyos
+      - endpoint: er-39a82c2460804a0c99868ce5ca779300.zerocarbon-1.stable.pndrs.de
+        version: v2c
+        community: vyos
+    metrics:
+      custom_metric:
+        unit: "{unit}"
+        gauge:
+          value_type: int
+        oid: ".1.3.6.1.2.1.1.3.0"  # sysUpTime
+      
+      # Add more metics wtith OID
+      another_metric:
+        unit: "{unit}"
+        gauge:
+          value_type: int
+        oid: ".1.3.6.1.2.1.2.2.1.10"  # ifInOctets
 
 processors:
   batch:
@@ -273,6 +297,10 @@ exporters:
         password: ${env:KAFKA_PASSWORD}
         mechanism: SCRAM-SHA-512
         version: 1
+# for testing 
+  prometheus:
+    endpoint: "0.0.0.0:8888"
+
   # otlp/tempo:
   #   endpoint: "http://tempo.tempo:4317" 
   #   tls:
@@ -337,3 +365,9 @@ service:
         processors: [memory_limiter, batch]
         exporters: [debug]  # Removed kafka/metrics
         # exporters: [kafka/metrics]
+
+    # new pipeline for SNMP
+    metrics/snmp:
+      receivers: [snmp]
+      processors: [memory_limiter, batch]
+      exporters: [debug]  # change for kafka/metrics when ready
