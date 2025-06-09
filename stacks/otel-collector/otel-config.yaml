@@ -302,33 +302,31 @@ exporters:
     verbosity: basic # basic/detailed 
 
 service:
-  #extensions: [zpages]
   pipelines: 
     metrics/k8s_cluster:
       receivers: [k8s_cluster]
-      exporters: [kafka/metrics]
+      exporters: [debug]  # Removed kafka/metrics
     
     traces:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [kafka/traces, debug]
+      exporters: [debug]  # Removed kafka/traces
 
     logs:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [kafka/logs, debug]
+      exporters: [debug]  # Removed kafka/logs
       
     metrics:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [kafka/metrics]
+      exporters: [debug]  # Removed kafka/metrics
 
     logs/syslog-test:
       receivers: [syslog/rfc5424, syslog/rfc5424tls]
-      #processors: [memory_limiter, batch]
-      exporters: [kafka/logs, debug]
+      exporters: [debug]  # Removed kafka/logs
 
     metrics/vyos:
         receivers: [prometheus/vyos]
         processors: [memory_limiter, batch]
-        exporters: [kafka/metrics]
+        exporters: [debug]  # Removed kafka/metrics
