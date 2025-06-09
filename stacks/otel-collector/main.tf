@@ -1,30 +1,30 @@
-resource "kubernetes_namespace" "otel_collector" {
-  metadata {
-    name = "otel-collector"
-    annotations = {
-      "sidecar.opentelemetry.io/inject" = "true"
-    }
-  }
+# resource "kubernetes_namespace" "otel_collector" {
+#   metadata {
+#     name = "otel-collector"
+#     annotations = {
+#       "sidecar.opentelemetry.io/inject" = "true"
+#     }
+#   }
 
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations["cattle.io/status"],
-      metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
-    ]
-  }
-}
+#   lifecycle {
+#     ignore_changes = [
+#       metadata[0].annotations["cattle.io/status"],
+#       metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
+#     ]
+#   }
+# }
 
 resource "kubernetes_service_account_v1" "otel_collector" {
   metadata {
     name      = "otel-collector"
-    namespace = kubernetes_namespace.otel_collector.metadata[0].name
+    namespace = kubernetes_namespace.network.metadata[0].name
   }
 }
 
 resource "kubernetes_config_map_v1" "collector" {
   metadata {
     name      = "otel-collector-config"
-    namespace = kubernetes_namespace.otel_collector.metadata[0].name
+    namespace = kubernetes_namespace.network.metadata[0].name
   }
 
   data = {
@@ -33,14 +33,14 @@ resource "kubernetes_config_map_v1" "collector" {
 
 
   }
-  depends_on = [kubernetes_namespace.otel_collector]
+  depends_on = [kubernetes_namespace.network]
 }
 
 
 resource "kubernetes_service_v1" "collector" {
   metadata {
     name      = "otel-collector"
-    namespace = kubernetes_namespace.otel_collector.metadata[0].name
+    namespace = kubernetes_namespace.network.metadata[0].name
     labels = {
       app       = "opentelemetry"
       component = "otel-collector"
@@ -97,7 +97,7 @@ resource "kubernetes_service_v1" "collector" {
 resource "kubernetes_deployment_v1" "collector" {
   metadata {
     name      = "otel-collector"
-    namespace = kubernetes_namespace.otel_collector.metadata[0].name
+    namespace = kubernetes_namespace.network.metadata[0].name
     labels = {
       app       = "opentelemetry"
       component = "otel-collector"
