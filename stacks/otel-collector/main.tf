@@ -264,7 +264,8 @@ resource "kubernetes_deployment_v1" "collector" {
               dynamic "secret" {
                 for_each = local.certs
                 content {
-                  name = replace(secret.value, ".", "-")
+                  name = kubernetes_secret_v1.certs[secret.key].metadata[0].name
+                  # name = replace(secret.value, ".", "-")
                   items {
                     key  = "tls.crt"
                     path = "${replace(secret.value, ".", "-")}.crt"
