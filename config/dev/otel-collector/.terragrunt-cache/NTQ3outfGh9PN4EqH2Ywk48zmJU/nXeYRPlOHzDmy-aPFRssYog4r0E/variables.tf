@@ -25,3 +25,7 @@ variable "new_secret_suffix" {
   description = "Unique suffix for suffix_secret"
   type        = string
 }
+variable "secret_suffix" {
+  description = "Unique suffix for suffix_secret"
+  type        = string
+}

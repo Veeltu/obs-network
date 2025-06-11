@@ -7,7 +7,7 @@ locals {
   working_dir_fullpath = get_terragrunt_dir()
   working_dir_parts = split("/", local.working_dir_fullpath)
   secret_suffix = "${element(local.working_dir_parts, length(local.working_dir_parts)-1)}-${element(local.working_dir_parts, length(local.working_dir_parts)-2)}"
-  # new_secret_suffix = "${local.namespace}-${replace(path_relative_to_include(), "/", "-")}"
+  new_secret_suffix = "${local.namespace}-${replace(path_relative_to_include(), "/", "-")}"
   config_path = "~/.kube/config"
   config_context = "microk8s"
   # config_context = "pndrs-observability"
@@ -93,5 +93,6 @@ inputs = merge(
   local.common_vars.locals,
   {
     secret_suffix = local.secret_suffix,  # stary suffix, jeśli jest potrzebny
+    new_secret_suffix = local.new_secret_suffix,  # stary suffix, jeśli jest potrzebny
   }
 )
