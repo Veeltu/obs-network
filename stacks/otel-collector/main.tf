@@ -1,25 +1,18 @@
-output "secret_suffix" {
-  value = var.secret_suffix
+resource "kubernetes_namespace" "network" {
+  metadata {
+    name = "network"
+    labels = {
+      shared-gateway-access = "true"
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations["cattle.io/status"],
+      metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
+    ]
+  }
 }
-
-
-
-
-# resource "kubernetes_namespace" "network" {
-#   metadata {
-#     name = "network"
-#     labels = {
-#       shared-gateway-access = "true"
-#     }
-#   }
-
-#   lifecycle {
-#     ignore_changes = [
-#       metadata[0].annotations["cattle.io/status"],
-#       metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
-#     ]
-#   }
-# }
 
 # Service account for the OpenTelemetry Collector
 # This provides the necessary permissions for the collector to access Kubernetes resources
