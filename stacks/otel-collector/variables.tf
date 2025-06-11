@@ -1,14 +1,14 @@
-variable "project" {
-  type = string
-}
+# variable "project" {
+#   type = string
+# }
 
-variable "cluster" {
-  type = object({
-    name     = string
-    location = string
-  })
+# variable "cluster" {
+#   type = object({
+#     name     = string
+#     location = string
+#   })
 
-}
+# }
 
 variable "docker_repositories" {
   type = object({
@@ -21,12 +21,12 @@ variable "docker_repositories" {
 }
 
 
-variable "new_secret_suffix" {
-  description = "Unique suffix for suffix_secret"
-  type        = string
-}
+# variable "new_secret_suffix" {
+#   description = "Unique suffix for suffix_secret"
+#   type        = string
+# }
 
-variable "secret_suffix" {
-  description = "Suffix dla nazwy secreta z backendu"
-  type        = string
-}
+# variable "secret_suffix" {
+#   description = "Suffix dla nazwy secreta z backendu"
+#   type        = string
+# }
