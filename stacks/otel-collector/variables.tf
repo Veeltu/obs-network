@@ -12,10 +12,10 @@
 
 variable "docker_repositories" {
   type = object({
-    quay_io    = string
-    edp_docker = string
+    # quay_io    = string
+    # edp_docker = string
     docker_hub = string
-    ghcr_io    = string
+    # ghcr_io    = string
   })
 
 }
