@@ -81,15 +81,8 @@ remote_state {
 # Merge locals from common.hcl & make it usable in terragrunt.hcl file.
 # These Variables can be overwritten in the terragrunt.hcl file.
 # Important: The Input order has to match the inputs in the terragrunt.hcl file.
-# inputs = merge(
-#   local.common_vars.locals,
-# )
-
-
 inputs = merge(
   local.common_vars.locals,
-  {
-    secret_suffix = local.secret_suffix,  # stary suffix, jeśli jest potrzebny
-    new_secret_suffix = local.new_secret_suffix,  # stary suffix, jeśli jest potrzebny
-  }
 )
+
+
