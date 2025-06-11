@@ -1,6 +1,7 @@
 locals {
   # Load Shared/Common Variables that can be used in all terraform configurations. 
   # Can be override via Terragrunt.hcl
+  namespace = "network"
   common_vars      = read_terragrunt_config("../common.hcl")
   impersonate_vars = read_terragrunt_config("../impersonate.hcl")
   working_dir_fullpath = get_terragrunt_dir()
