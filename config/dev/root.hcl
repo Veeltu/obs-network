@@ -58,6 +58,14 @@ terraform {
 EOF
 }
 
+output "secret-suffix" {
+  value = local.secret_suffix
+}
+
+output "new-secret_suffix" {
+  value = "${local.namespace}-${replace(path_relative_to_include(), "/", "-")}"
+}
+
 remote_state {
   backend = "kubernetes"
   config = {
