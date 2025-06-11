@@ -59,13 +59,13 @@ terraform {
 EOF
 }
 
-output "secret-suffix" {
-  value = local.secret_suffix
-}
+# output "secret-suffix" {
+#   value = local.secret_suffix
+# }
 
-output "new-secret_suffix" {
-  value = "${local.namespace}-${replace(path_relative_to_include(), "/", "-")}"
-}
+# output "new-secret_suffix" {
+#   value = "${local.namespace}-${replace(path_relative_to_include(), "/", "-")}"
+# }
 
 remote_state {
   backend = "kubernetes"
@@ -85,4 +85,7 @@ remote_state {
 # Important: The Input order has to match the inputs in the terragrunt.hcl file.
 inputs = merge(
   local.common_vars.locals,
+  {
+    secret_suffix = local.secret_suffix
+  }
 )

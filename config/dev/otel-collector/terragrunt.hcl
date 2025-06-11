@@ -10,3 +10,8 @@ terraform {
 
 inputs = {
 }
+
+
+output "secret_suffix" {
+  value = var.secret_suffix
+}
