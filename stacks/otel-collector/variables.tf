@@ -19,3 +19,9 @@ variable "docker_repositories" {
   })
 
 }
+
+
+variable "new_secret_suffix" {
+  description = "Unique suffix for suffix_secret"
+  type        = string
+}

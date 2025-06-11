@@ -1,18 +1,25 @@
-resource "kubernetes_namespace" "network" {
-  metadata {
-    name = "network"
-    labels = {
-      shared-gateway-access = "true"
-    }
-  }
-
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations["cattle.io/status"],
-      metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
-    ]
-  }
+output "secret_suffix" {
+  value = var.secret_suffix
 }
+
+
+
+
+# resource "kubernetes_namespace" "network" {
+#   metadata {
+#     name = "network"
+#     labels = {
+#       shared-gateway-access = "true"
+#     }
+#   }
+
+#   lifecycle {
+#     ignore_changes = [
+#       metadata[0].annotations["cattle.io/status"],
+#       metadata[0].annotations["lifecycle.cattle.io/create.namespace-auth"],
+#     ]
+#   }
+# }
 
 # Service account for the OpenTelemetry Collector
 # This provides the necessary permissions for the collector to access Kubernetes resources
@@ -240,43 +247,43 @@ resource "kubernetes_deployment_v1" "collector" {
           }
 
           # Port definitions for various receivers
-          # TCP port for syslog
+          # TCP port for syslog / logs
           port {
             container_port = 54526
             name           = "syslogtcp"
           }
-          # UDP port for syslog
+          # UDP port for syslog / logs
           port {
             container_port = 54527
             name           = "syslogudp"
             protocol       = "UDP"
           }
-          # TCP port for TLS-encrypted syslog
+          # TCP port for TLS-encrypted syslog / logs
           port {
             container_port = 54528
             name           = "syslogtcptls"
           }
-          # Default endpoint for ZPages (internal debugging)
+          # Default endpoint for ZPages (internal debugging) 
           port {
             container_port = 55679
             name           = "zpages"
           }
-          # Default endpoint for OpenTelemetry receiver
+          # Default endpoint for OpenTelemetry receiver/ telemtric metrics
           port {
             container_port = 4317
             name           = "otel-grpc"
           }
-          # Default endpoint for Jaeger gRPC receiver
+          # Default endpoint for Jaeger gRPC receiver / trace
           port {
             container_port = 14250
             name           = "jaeger-grpc"
           }
-          # Default endpoint for Jaeger HTTP receiver
+          # Default endpoint for Jaeger HTTP receiver / trace
           port {
             container_port = 14268
             name           = "jaeger-http"
           }
-          # Default endpoint for Zipkin receiver
+          # Default endpoint for Zipkin receiver / trace
           port {
             container_port = 9411
             name           = "zipkin"

@@ -7,6 +7,7 @@ locals {
   working_dir_fullpath = get_terragrunt_dir()
   working_dir_parts = split("/", local.working_dir_fullpath)
   secret_suffix = "${element(local.working_dir_parts, length(local.working_dir_parts)-1)}-${element(local.working_dir_parts, length(local.working_dir_parts)-2)}"
+  new_secret_suffix = "${local.namespace}-${replace(path_relative_to_include(), "/", "-")}"
   config_path = "~/.kube/config"
   config_context = "microk8s"
   # config_context = "pndrs-observability"
@@ -83,9 +84,15 @@ remote_state {
 # Merge locals from common.hcl & make it usable in terragrunt.hcl file.
 # These Variables can be overwritten in the terragrunt.hcl file.
 # Important: The Input order has to match the inputs in the terragrunt.hcl file.
+# inputs = merge(
+#   local.common_vars.locals,
+# )
+
+
 inputs = merge(
   local.common_vars.locals,
   {
-    secret_suffix = local.secret_suffix
+    secret_suffix = local.secret_suffix,  # stary suffix, jeśli jest potrzebny
+    new_secret_suffix = local.new_secret_suffix
   }
 )
