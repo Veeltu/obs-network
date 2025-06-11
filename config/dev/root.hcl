@@ -92,7 +92,9 @@ remote_state {
 inputs = merge(
   local.common_vars.locals,
   {
-    secret_suffix = local.secret_suffix,  # stary suffix, jeśli jest potrzebny
     new_secret_suffix = local.new_secret_suffix
+  },
+  {
+    secret_suffix = local.secret_suffix,  # stary suffix, jeśli jest potrzebny
   }
 )
