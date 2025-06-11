@@ -4,8 +4,7 @@ include "root" {
 }
 
 terraform {
-  source = "../../../stacks/otel-collector"
-  # source = "${get_path_to_repo_root()}//stacks/otel-collector"
+  source = "${get_path_to_repo_root()}//stacks/otel-collector"
 }
 
 inputs = {
