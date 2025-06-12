@@ -364,6 +364,6 @@ service:
     metrics/vyos:
         receivers: [prometheus/vyos]
         processors: [memory_limiter, batch]
-        exporters: [debug,prometheus]  # Removed kafka/metrics
+        # exporters: [debug,prometheus]  # Removed kafka/metrics
         exporters: [debug]  # Removed kafka/metrics
         # exporters: [kafka/metrics]
