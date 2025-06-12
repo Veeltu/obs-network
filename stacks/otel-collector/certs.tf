@@ -7,31 +7,31 @@ locals {
 
 
 
-resource "kubernetes_manifest" "certs" {
-  for_each = local.certs
-  manifest = {
-    apiVersion = "cert-manager.io/v1"
-    kind       = "Certificate"
-    metadata = {
-      name      = replace(each.key, ".", "-")
-      namespace = kubernetes_namespace.network.metadata.0.name
-      # namespace = kubernetes_namespace.traefik.metadata.0.name
-    }
-    spec = {
-      dnsNames = [
-        each.key
-      ]
-      duration = "8760h0m0s"
-      issuerRef = {
-        kind = "ClusterIssuer"
-        name = "edp-internal"
-      }
-      secretName = replace(each.key, ".", "-")
-    }
-  }
+# resource "kubernetes_manifest" "certs" {
+#   for_each = local.certs
+#   manifest = {
+#     apiVersion = "cert-manager.io/v1"
+#     kind       = "Certificate"
+#     metadata = {
+#       name      = replace(each.key, ".", "-")
+#       namespace = kubernetes_namespace.network.metadata.0.name
+#       # namespace = kubernetes_namespace.traefik.metadata.0.name
+#     }
+#     spec = {
+#       dnsNames = [
+#         each.key
+#       ]
+#       duration = "8760h0m0s"
+#       issuerRef = {
+#         kind = "ClusterIssuer"
+#         name = "edp-internal"
+#       }
+#       secretName = replace(each.key, ".", "-")
+#     }
+#   }
 
-  timeouts {
-    create = "10m"
-    delete = "5m"
-  }
-}
+#   timeouts {
+#     create = "10m"
+#     delete = "5m"
+#   }
+# }

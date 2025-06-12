@@ -299,8 +299,8 @@ exporters:
         mechanism: SCRAM-SHA-512
         version: 1
 # for testing 
-  prometheus:
-    endpoint: "0.0.0.0:8888"
+  # prometheus:
+  #   endpoint: "0.0.0.0:8888"
 
   # otlp/tempo:
   #   endpoint: "http://tempo.tempo:4317" 
@@ -365,5 +365,5 @@ service:
         receivers: [prometheus/vyos]
         processors: [memory_limiter, batch]
         exporters: [debug,prometheus]  # Removed kafka/metrics
-        # exporters: [debug]  # Removed kafka/metrics
+        exporters: [debug]  # Removed kafka/metrics
         # exporters: [kafka/metrics]

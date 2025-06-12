@@ -324,5 +324,5 @@ resource "kubernetes_deployment_v1" "collector" {
   }
 
   # Ensure certificates are created before the deployment
-  depends_on = [kubernetes_manifest.certs]
+  # depends_on = [kubernetes_manifest.certs]
 }
