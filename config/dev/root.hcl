@@ -66,7 +66,7 @@ EOF
 
 
 remote_state {
-  backend = "kubernetes"
+  backend = "my-kubernetes"
   config = {
     secret_suffix = local.secret_suffix
     config_path = local.config_path
