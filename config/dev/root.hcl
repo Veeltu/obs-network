@@ -6,8 +6,8 @@ locals {
   impersonate_vars = read_terragrunt_config("../impersonate.hcl")
   working_dir_fullpath = get_terragrunt_dir()
   working_dir_parts = split("/", local.working_dir_fullpath)
-  # secret_suffix     = "network-otel-collector-dev"
-  secret_suffix = "${local.namespace}-${element(local.working_dir_parts, length(local.working_dir_parts)-1)}-${element(local.working_dir_parts, length(local.working_dir_parts)-2)}"
+ secret_suffix     = "network-otel-collector-dev"
+  #  secret_suffix = "${local.namespace}-${element(local.working_dir_parts, length(local.working_dir_parts)-1)}-${element(local.working_dir_parts, length(local.working_dir_parts)-2)}"
   # secret_suffix     = "otel-collector-dev"
   # secret_suffix = "${element(local.working_dir_parts, length(local.working_dir_parts)-1)}-${element(local.working_dir_parts, length(local.working_dir_parts)-2)}"
   new_secret_suffix = "${local.namespace}-${replace(path_relative_to_include(), "/", "-")}"
