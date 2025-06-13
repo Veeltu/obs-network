@@ -105,6 +105,14 @@ resource "kubernetes_service_v1" "collector" {
       protocol    = "UDP"
       name        = "syslogudp"
     }
+
+    port {
+      port        = 55679
+      target_port = 55679
+      protocol    = "TCP"
+      name        = "zpages"
+    }
+
   }
 }
 
@@ -240,43 +248,43 @@ resource "kubernetes_deployment_v1" "collector" {
           }
 
           # Port definitions for various receivers
-          # TCP port for syslog / logs
+          # TCP port for syslog
           port {
             container_port = 54526
             name           = "syslogtcp"
           }
-          # UDP port for syslog / logs
+          # UDP port for syslog
           port {
             container_port = 54527
             name           = "syslogudp"
             protocol       = "UDP"
           }
-          # TCP port for TLS-encrypted syslog / logs
+          # TCP port for TLS-encrypted syslog
           port {
             container_port = 54528
             name           = "syslogtcptls"
           }
-          # Default endpoint for ZPages (internal debugging) 
+          # Default endpoint for ZPages (internal debugging)
           port {
             container_port = 55679
             name           = "zpages"
           }
-          # Default endpoint for OpenTelemetry receiver/ telemtric metrics
+          # Default endpoint for OpenTelemetry receiver
           port {
             container_port = 4317
             name           = "otel-grpc"
           }
-          # Default endpoint for Jaeger gRPC receiver / trace
+          # Default endpoint for Jaeger gRPC receiver
           port {
             container_port = 14250
             name           = "jaeger-grpc"
           }
-          # Default endpoint for Jaeger HTTP receiver / trace
+          # Default endpoint for Jaeger HTTP receiver
           port {
             container_port = 14268
             name           = "jaeger-http"
           }
-          # Default endpoint for Zipkin receiver / trace
+          # Default endpoint for Zipkin receiver
           port {
             container_port = 9411
             name           = "zipkin"
@@ -298,6 +306,11 @@ resource "kubernetes_deployment_v1" "collector" {
 
         # Volume for TLS certificates
         # Uses projected volume to combine multiple certificate secrets
+
+        #  - Creates a projected volume that combines TLS secrets for multiple domains.
+        #  - For each domain in local.certs, it exposes two files in the container: a certificate and a private key, with appropriate names.
+        #  - Allows applications to easily and securely access certificates directly from the container's file system.
+
         volume {
           name = "secrets"
           projected {
